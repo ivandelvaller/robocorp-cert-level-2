@@ -13,10 +13,9 @@ def order_robots_from_RobotSpareBin():
     Embeds the screenshot of the robot to the PDF receipt.
     Creates ZIP archive of the receipts and the images.
     """
-    browser.configure(slowmo=100)
+    browser.configure(slowmo=1000)
     open_robot_order_website()
-    orders = get_orders()
-    print(orders)
+    close_annoying_modal()
 
 
 def open_robot_order_website():
@@ -36,3 +35,13 @@ def get_orders():
     orders_path = "orders.csv"
     orders = library.read_table_from_csv(path=orders_path)
     print(orders)
+
+
+def close_annoying_modal():
+    """Close the modal that pops up when open website"""
+    page = browser.page()
+    page.click("button:text('OK')")
+
+
+def fill_the_form():
+    """Fill form of website with data"""
