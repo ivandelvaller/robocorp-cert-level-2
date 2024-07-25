@@ -15,7 +15,20 @@ def order_robots_from_RobotSpareBin():
     """
     browser.configure(slowmo=1000)
     open_robot_order_website()
+    orders = get_orders()
     close_annoying_modal()
+    for order in orders:
+        head = order["Head"]
+        body = order["Body"]
+        leags = order["Legs"]
+        address = order["Address"]
+
+        fill_the_form(
+            head,
+            body,
+            leags,
+            address,
+        )
 
 
 def open_robot_order_website():
@@ -34,7 +47,7 @@ def get_orders():
 
     orders_path = "orders.csv"
     orders = library.read_table_from_csv(path=orders_path)
-    print(orders)
+    return orders
 
 
 def close_annoying_modal():
@@ -43,5 +56,11 @@ def close_annoying_modal():
     page.click("button:text('OK')")
 
 
-def fill_the_form():
+def fill_the_form(head, body, legs, address):
     """Fill form of website with data"""
+    page = browser.page()
+    page.select_option("#head", head)
+    page.check("#id-body-{body}".format(body=body))
+    page.fill("div.mb-3 input[type=number]", legs)
+    page.fill("#address", address)
+    page.click("button:text('Preview')")
