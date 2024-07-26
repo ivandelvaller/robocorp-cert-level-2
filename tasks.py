@@ -17,7 +17,7 @@ def order_robots_from_RobotSpareBin():
     Embeds the screenshot of the robot to the PDF receipt.
     Creates ZIP archive of the receipts and the images.
     """
-    browser.configure(slowmo=1000)
+    browser.configure()
 
     open_robot_order_website()
     close_annoying_modal()
